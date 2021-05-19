@@ -23,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // here is the movie name///
+
+
+        String movieName = "I love Coding";
 
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
@@ -36,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
                     timer.cancel();
                 }
 
+                if (i==50){
+
+                    String hint = getMovieNameHint(movieName, true);
+                    binding.name.setText(hint);
+                }
+
             }
         };
 
@@ -47,18 +57,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        // here is the movie name///
 
 
-        String movieName = "I love Coding";
-
-
-        prepareMovieNameHint(movieName);
+        String hint = getMovieNameHint(movieName, false);
+        binding.name.setText(hint);
 
 
     }
 
-    private void prepareMovieNameHint(String movieName) {
+    private String getMovieNameHint(String movieName, boolean showHint) {
+        String hint = "";
         //this is the code to get dashed text for each string or movie name
          String[] splits = movieName.split(" ");
          StringBuilder sb = new StringBuilder();
@@ -66,22 +74,27 @@ public class MainActivity extends AppCompatActivity {
          int words = splits.length;
         Log.d(TAG, "prepareMovieNameHint: words"+words);
         for (int i=0; i<words; i++){
+            char[] chars = splits[i].toCharArray();
 
-            for (char c: splits[i].toCharArray()){
-                Log.d(TAG, "prepareMovieNameHint: char for "+i+" is : "+c);
-                sb.append("_");
+            for (int j=0; j<chars.length; j++){
+                Log.d(TAG, "prepareMovieNameHint: char for "+i+" is : "+chars[j]);
+
+                if (j==0){
+                    if (showHint){
+                        sb.append(chars[j]);
+                    }else sb.append("_");
+                }else sb.append("_");
+
             }
-
             Log.d(TAG, "prepareMovieNameHint: word loop: "+i);
             sb.append(" ");
 
         }
-
-
-        binding.name.setText(sb.toString().substring(0, sb.toString().length()-1));
+        hint = sb.substring(0, sb.toString().length()-1);
 
 
 
 
+        return hint;
     }
 }
