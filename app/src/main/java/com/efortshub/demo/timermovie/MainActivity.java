@@ -36,14 +36,18 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(() -> binding.counter.setText(i+""));
                     i--;
                 }else{
-                    runOnUiThread(() -> binding.counter.setText("finished"));
+                    runOnUiThread(() -> {
+                        binding.counter.setText("finished");
+                        binding.name.setText(movieName);
+                    });
                     timer.cancel();
                 }
 
                 if (i==50){
-
-                    String hint = getMovieNameHint(movieName, true);
-                    binding.name.setText(hint);
+                    runOnUiThread(() -> {
+                        String hint = getMovieNameHint(movieName, true);
+                        binding.name.setText(hint);
+                    });
                 }
 
             }
