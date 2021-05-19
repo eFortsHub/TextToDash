@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getMovieNameHint(String movieName, boolean showHint) {
-        String hint = "";
+
         //this is the code to get dashed text for each string or movie name
          String[] splits = movieName.split(" ");
          StringBuilder sb = new StringBuilder();
@@ -94,11 +94,8 @@ public class MainActivity extends AppCompatActivity {
             sb.append(" ");
 
         }
-        hint = sb.substring(0, sb.toString().length()-1);
 
 
-
-
-        return hint;
+        return sb.substring(0, sb.toString().length()-1);
     }
 }
