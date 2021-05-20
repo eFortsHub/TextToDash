@@ -77,6 +77,12 @@ public class MainActivity extends AppCompatActivity {
 
          int words = splits.length;
         Log.d(TAG, "prepareMovieNameHint: words"+words);
+
+
+        //  I love coding
+
+        int randWord = 2;
+
         for (int i=0; i<words; i++){
             char[] chars = splits[i].toCharArray();
 
