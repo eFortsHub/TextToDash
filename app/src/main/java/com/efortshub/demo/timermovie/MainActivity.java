@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     int timeToPlay =30;
     int timeToShowHint = 0;
     private static final String TAG = "timetoshow";
+    List<TimeTable> timeTables = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         timeToShowHint = getTimeToShowHint(timeToPlay, movieName);
         Log.d("timetoshow", "onCreate: time to show hint "+timeToShowHint);
         List<MovieHintPattern> movieHintPatternList = getMoviePatternList(movieName);
+        timeTables = getTimetables(timeToPlay, timeToShowHint, movieName);
 
 
         Timer timer = new Timer();
@@ -61,6 +63,19 @@ public class MainActivity extends AppCompatActivity {
                         String hint = getMovieNameHint(movieName);
                         binding.name.setText(hint);
                     });
+                }
+
+                for (TimeTable tt: timeTables){
+                    if (tt.getSecAtIndex()==timeToPlay){
+                        String hint = getMovieNameHintFromList(tt.getIndex(), movieName, movieHintPatternList);
+
+                        runOnUiThread(() -> {
+                            binding.name.setText(hint);
+                        });
+
+
+                        break;
+                    }
                 }
 
 
@@ -90,6 +105,97 @@ public class MainActivity extends AppCompatActivity {
         binding.name.setText(hint);
 
 
+    }
+
+    private String getMovieNameHintFromList(int index, String movieName, List<MovieHintPattern> movieHintPatternList) {
+
+        StringBuilder sb = new StringBuilder();
+
+        String[] splits = movieName.split(" ");
+        int words = splits.length;
+
+
+        for (int i = 0; i<index; i++){
+            MovieHintPattern movieHintPattern = movieHintPatternList.get(i);
+            int randWord = movieHintPattern.getWord();
+            int randChar = movieHintPattern.getCharacter();
+
+            for (int wordint = 0; wordint<words; wordint++){
+
+                String charstr = splits[wordint];
+                int charcount = charstr.length();
+
+                for (int charint =0; charint<charcount; charint++){
+                    if (randWord==wordint&&randChar==charint){
+                        sb.append(charstr.charAt(charint));
+                    }else sb.append("_");
+
+                }
+                sb.append(" ");
+            }
+
+
+
+
+/*
+
+
+            for (int i = 0; i<words; i++){
+                String word = splits[i];
+                char[] chars = word.toCharArray();
+
+
+                for (int j=0; j<chars.length; j++){
+
+                    if (j==charOne || j== charTwo){
+                        sb.append(chars[j]);
+                    }else sb.append("_");
+
+
+                }
+
+                sb.append(" ");
+
+
+            }
+
+
+
+*/
+
+
+
+
+
+        }
+
+
+
+
+        return sb.toString();
+    }
+
+    private List<TimeTable> getTimetables(int timeToPlay, int timeToShowHint, String movieName) {
+        List<TimeTable> list = new ArrayList<>();
+
+        int oldTime = 0;
+
+        String[] wordsArray = movieName.split(" ");
+        int timeCount = (wordsArray.length+2);
+        for (int i = 0; i<timeCount; i++){
+            if (oldTime==0){
+                oldTime = timeToPlay;
+            }else oldTime -= timeToShowHint;
+            Log.d(TAG, "getTimetables: index : "+i);
+            Log.d(TAG, "getTimetables: timeto show hint : "+oldTime);
+
+            list.add(new TimeTable(i, oldTime));
+        }
+
+
+
+
+        return list;
     }
 
     private List<MovieHintPattern> getMoviePatternList(String movieName) {
