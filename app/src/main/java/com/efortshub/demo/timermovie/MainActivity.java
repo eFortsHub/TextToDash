@@ -9,6 +9,8 @@ import android.util.Log;
 import com.efortshub.demo.timermovie.databinding.ActivityMainBinding;
 
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         timeToShowHint = getTimeToShowHint(timeToPlay, movieName);
         Log.d("timetoshow", "onCreate: time to show hint "+timeToShowHint);
+        List<MovieHintPattern> movieHintPatternList = getMoviePatternList(movieName);
+
 
         Timer timer = new Timer();
 
@@ -84,6 +88,34 @@ public class MainActivity extends AppCompatActivity {
         binding.name.setText(hint);
 
 
+    }
+
+    private List<MovieHintPattern> getMoviePatternList(String movieName) {
+        List<MovieHintPattern> list = new ArrayList<>();
+        String[] wordsArray = movieName.split(" ");
+        int wordCount = wordsArray.length;
+        int charToShow = wordCount+2;
+
+
+        for (int i=0;i<charToShow;i++){
+            int randWord = new Random().nextInt(wordCount);
+            String randWordStr = wordsArray[randWord];
+            int randChar = new Random().nextInt(randWordStr.length());
+
+            String randCharStr = String.valueOf(randWordStr.charAt(randChar));
+
+
+            Log.d(TAG, "getMoviePatternList: rand word: "+randWord);
+            Log.d(TAG, "getMoviePatternList: rand word string :"+randWordStr);
+            Log.d(TAG, "getMoviePatternList: rand char :"+randChar);
+            Log.d(TAG, "getMoviePatternList: rand char string :: "+randCharStr);
+
+
+
+
+        }
+
+        return list;
     }
 
     private int getTimeToShowHint(int timeToPlay, String movieName) {
