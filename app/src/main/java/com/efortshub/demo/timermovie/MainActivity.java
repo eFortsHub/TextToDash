@@ -115,10 +115,51 @@ public class MainActivity extends AppCompatActivity {
         int words = splits.length;
 
 
+        for (int wordint = 0; wordint<words; wordint++){
+
+            String charstr = splits[wordint];
+            int charcount = charstr.length();
+
+            for (int charint =0; charint<charcount; charint++){
+                boolean contains = false;
+
+
+
+                for (int i = 0; i<index; i++) {
+                    MovieHintPattern movieHintPattern = movieHintPatternList.get(i);
+                    int randWord = movieHintPattern.getWord();
+                    int randChar = movieHintPattern.getCharacter();
+
+
+                    if (wordint==randWord&&charint==randChar){
+                        sb.append(charstr.charAt(charint));
+                        contains = true;
+                    }
+
+
+                }
+
+                    if (!contains) sb.append("_");
+
+            }
+            sb.append(" ");
+        }
+
+
+
+
+
         for (int i = 0; i<index; i++){
             MovieHintPattern movieHintPattern = movieHintPatternList.get(i);
             int randWord = movieHintPattern.getWord();
             int randChar = movieHintPattern.getCharacter();
+
+
+
+
+
+
+/*
 
             for (int wordint = 0; wordint<words; wordint++){
 
@@ -131,10 +172,11 @@ public class MainActivity extends AppCompatActivity {
                     }else sb.append("_");
 
                 }
-                sb.append(" ");
+                if (wordint==0) sb.append(" ");
             }
 
 
+*/
 
 
 /*
