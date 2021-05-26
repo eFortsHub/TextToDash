@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     runOnUiThread(() -> {
                         binding.counter.setText("finished");
-                        binding.name.setText(movieName);
+                       // binding.name.setText(movieName);
                     });
                     timer.cancel();
                 }
@@ -80,15 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-/*
-
-                if (timeToPlay==50){
-                    runOnUiThread(() -> {
-                        String hint = getMovieNameHint(movieName, true);
-                        binding.name.setText(hint);
-                    });
-                }
-*/
 
 
             }
@@ -145,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
             sb.append(" ");
         }
 
+/*
 
 
 
@@ -159,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+*/
 /*
 
             for (int wordint = 0; wordint<words; wordint++){
@@ -176,9 +169,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
+*//*
+
+
+
 */
-
-
 /*
 
 
@@ -203,7 +198,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-*/
+*//*
+
 
 
 
@@ -212,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+*/
 
 
         return sb.toString();
@@ -224,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
 
         String[] wordsArray = movieName.split(" ");
         int timeCount = (wordsArray.length+2);
-        for (int i = 0; i<timeCount; i++){
+        for (int i = 0; i<timeCount+1; i++){
             if (oldTime==0){
                 oldTime = timeToPlay;
             }else oldTime -= timeToShowHint;
