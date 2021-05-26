@@ -4,16 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.efortshub.demo.timermovie.databinding.ActivityMainBinding;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -98,6 +100,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         for (int i=0;i<charToShow;i++){
+            MovieHintPattern pattern = validateMoviePattern(wordsArray, wordCount, list);
+
+            list.add(pattern);
+        }
+
+        return list;
+    }
+
+    private MovieHintPattern validateMoviePattern(String[] wordsArray, int wordCount, List<MovieHintPattern> list) {
+        boolean retry = false;
+
             int randWord = new Random().nextInt(wordCount);
             String randWordStr = wordsArray[randWord];
             int randChar = new Random().nextInt(randWordStr.length());
@@ -110,12 +123,16 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "getMoviePatternList: rand char :"+randChar);
             Log.d(TAG, "getMoviePatternList: rand char string :: "+randCharStr);
 
+            for (MovieHintPattern mhp: list){
+                if (mhp.getWord()==randWord && mhp.getCharacter()==randChar){
+                    //this word is already exist...........................
+                    Log.d(TAG, "validateMoviePattern: retrying to generate unique number");
 
-
-
-        }
-
-        return list;
+                    return validateMoviePattern(wordsArray,wordCount,list);
+                }
+            }
+                //not exist add this word and char
+                return new MovieHintPattern(randWord, randChar);
     }
 
     private int getTimeToShowHint(int timeToPlay, String movieName) {
