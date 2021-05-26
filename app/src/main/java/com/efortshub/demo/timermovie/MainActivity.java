@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     int timeToPlay =30;
     int timeToShowHint = 0;
-    private static final String TAG = "hhhh";
+    private static final String TAG = "timetoshow";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // here is the movie name///
-        String movieName = "I love coding";
+        String movieName = "I love coding good";
 
         timeToShowHint = getTimeToShowHint(timeToPlay, movieName);
         Log.d("timetoshow", "onCreate: time to show hint "+timeToShowHint);
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         String[] arr = movieName.split(" ");
         int words = arr.length;
         Log.d("timetoshow", "getTimeToShowHint: words count :"+words);
-        int devidedBy =  words+2;
+        int devidedBy =  words+2; //3 - 4
         Log.d("timetoshow", "getTimeToShowHint: time devided by : "+devidedBy);
         i = timeToPlay/devidedBy;
         int timeToshowHint = i;
@@ -139,7 +139,69 @@ public class MainActivity extends AppCompatActivity {
 
          int words = splits.length;
         Log.d(TAG, "prepareMovieNameHint: words"+words);
+        int charToShow = words+2; //5
+        Log.d(TAG, "getMovieNameHint: char to show: "+charToShow);
 
+        int specialWordToShowTwoChar = new Random().nextInt(words); //3
+
+        int specialWordToShowTwoCharTwo = new Random().nextInt(words); //3
+
+        if (specialWordToShowTwoChar==specialWordToShowTwoCharTwo){
+
+            if (specialWordToShowTwoCharTwo==words){
+                --specialWordToShowTwoCharTwo;//3
+            }else {
+                ++specialWordToShowTwoCharTwo;//4
+            }
+        }
+        Log.d(TAG, "getMovieNameHint: special word one :"+specialWordToShowTwoChar);
+        Log.d(TAG, "getMovieNameHint: special word two :"+specialWordToShowTwoCharTwo);
+
+
+        for (int i = 0; i<words; i++){
+            String word = splits[i];
+            char[] chars = word.toCharArray();
+            int charOne=0, charTwo=-1;
+
+            charOne = new Random().nextInt(chars.length);
+
+            if (specialWordToShowTwoChar==i || specialWordToShowTwoCharTwo==i) {
+                // show two character from this word
+                charTwo = new Random().nextInt(chars.length);
+
+                if (charOne == charTwo) {
+                    if (charTwo == chars.length) {
+                        --charTwo;//3
+                    } else {
+                        ++charTwo;//4
+                    }
+
+                }
+            }
+
+            for (int j=0; j<chars.length; j++){
+
+                if (j==charOne || j== charTwo){
+                    sb.append(chars[j]);
+                }else sb.append("_");
+
+
+            }
+
+            sb.append(" ");
+
+
+        }
+
+
+
+
+
+
+
+
+
+/*
 
         //  I love coding
         int randWord = new Random().nextInt(words);
@@ -179,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
             sb.append(" ");
 
         }
+*/
 
 
         return sb.substring(0, sb.toString().length()-1);
