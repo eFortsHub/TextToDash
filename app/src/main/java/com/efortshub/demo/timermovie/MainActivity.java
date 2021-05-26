@@ -109,8 +109,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private MovieHintPattern validateMoviePattern(String[] wordsArray, int wordCount, List<MovieHintPattern> list) {
-        boolean retry = false;
-
+        
             int randWord = new Random().nextInt(wordCount);
             String randWordStr = wordsArray[randWord];
             int randChar = new Random().nextInt(randWordStr.length());
@@ -131,8 +130,10 @@ public class MainActivity extends AppCompatActivity {
                     return validateMoviePattern(wordsArray,wordCount,list);
                 }
             }
-                //not exist add this word and char
-                return new MovieHintPattern(randWord, randChar);
+            
+        //not exist add this word and char
+        Log.d(TAG, "validateMoviePattern: returning the pattern coz it unique");
+        return new MovieHintPattern(randWord, randChar);
     }
 
     private int getTimeToShowHint(int timeToPlay, String movieName) {
@@ -142,11 +143,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d("timetoshow", "getTimeToShowHint: words count :"+words);
         int devidedBy =  words+2; //3 - 4
         Log.d("timetoshow", "getTimeToShowHint: time devided by : "+devidedBy);
-        i = timeToPlay/devidedBy;
-        int timeToshowHint = i;
-        timeToshowHint = timeToPlay-i;
 
-        return timeToshowHint;
+
+        return (timeToPlay/devidedBy);
     }
 
 
